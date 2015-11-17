@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	randbo "github.com/dustin/randbo"
+	randbo "QmciEePSP8wpGYZp8fsPFi49Ya7xQMUFwFj2z5fDpfZnhC/randbo"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
