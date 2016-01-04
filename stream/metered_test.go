@@ -5,10 +5,10 @@ import (
 	"io/ioutil"
 	"testing"
 
-	randbo "github.com/dustin/randbo"
 	inet "github.com/ipfs/go-libp2p/p2p/net"
 	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
+	randbo "gx/ipfs/QmYvsG72GsfLgUeSojXArjnU6L4Wmwk7wuAxtNLuyXcc1T/randbo"
 )
 
 type FakeStream struct {
