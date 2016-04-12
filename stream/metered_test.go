@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	inet "github.com/ipfs/go-libp2p/p2p/net"
-	peer "github.com/ipfs/go-libp2p/p2p/peer"
 	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
+	peer "gx/ipfs/QmY1xNhBfF9xA1pmD8yejyQAyd77K68qNN6JPM1CN2eiRu/go-libp2p-peer"
 	randbo "gx/ipfs/QmYvsG72GsfLgUeSojXArjnU6L4Wmwk7wuAxtNLuyXcc1T/randbo"
 )
 
