@@ -1,8 +1,8 @@
 package meterconn
 
 import (
+	transport "github.com/ipfs/go-libp2p-transport"
 	metrics "github.com/ipfs/go-libp2p/p2p/metrics"
-	transport "gx/ipfs/QmRHqYZs3Diy8YC3bW16zvs8VDDwS2ARKBuKwALxEMqibc/go-libp2p-transport"
 )
 
 type MeteredConn struct {
