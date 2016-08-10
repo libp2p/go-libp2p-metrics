@@ -2,7 +2,7 @@ package metrics
 
 import (
 	peer "github.com/ipfs/go-libp2p-peer"
-	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
+	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
 )
 
 type StreamMeterCallback func(int64, protocol.ID, peer.ID)

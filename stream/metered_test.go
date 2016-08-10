@@ -7,8 +7,8 @@ import (
 
 	randbo "github.com/dustin/randbo"
 	peer "github.com/ipfs/go-libp2p-peer"
-	inet "github.com/ipfs/go-libp2p/p2p/net"
-	protocol "github.com/ipfs/go-libp2p/p2p/protocol"
+	inet "github.com/libp2p/go-libp2p/p2p/net"
+	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
 )
 
 type FakeStream struct {
