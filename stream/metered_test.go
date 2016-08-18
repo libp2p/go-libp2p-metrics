@@ -24,6 +24,10 @@ func (fs *FakeStream) Write(b []byte) (int, error) {
 	return len(b), nil
 }
 
+func (fs *FakeStream) Protocol() protocol.ID {
+	return "TEST"
+}
+
 func TestCallbacksWork(t *testing.T) {
 	fake := new(FakeStream)
 
@@ -38,7 +42,7 @@ func TestCallbacksWork(t *testing.T) {
 		recv += n
 	}
 
-	ms := newMeteredStream(fake, protocol.ID("TEST"), peer.ID("PEER"), recvCB, sentCB)
+	ms := newMeteredStream(fake, peer.ID("PEER"), recvCB, sentCB)
 
 	toWrite := int64(100000)
 	toRead := int64(100000)

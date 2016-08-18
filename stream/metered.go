@@ -19,18 +19,18 @@ type meteredStream struct {
 	mesRecv metrics.StreamMeterCallback
 }
 
-func newMeteredStream(base inet.Stream, pid protocol.ID, p peer.ID, recvCB, sentCB metrics.StreamMeterCallback) inet.Stream {
+func newMeteredStream(base inet.Stream, p peer.ID, recvCB, sentCB metrics.StreamMeterCallback) inet.Stream {
 	return &meteredStream{
 		Stream:   base,
 		mesSent:  sentCB,
 		mesRecv:  recvCB,
-		protoKey: pid,
+		protoKey: base.Protocol(),
 		peerKey:  p,
 	}
 }
 
-func WrapStream(base inet.Stream, pid protocol.ID, bwc metrics.Reporter) inet.Stream {
-	return newMeteredStream(base, pid, base.Conn().RemotePeer(), bwc.LogRecvMessageStream, bwc.LogSentMessageStream)
+func WrapStream(base inet.Stream, bwc metrics.Reporter) inet.Stream {
+	return newMeteredStream(base, base.Conn().RemotePeer(), bwc.LogRecvMessageStream, bwc.LogSentMessageStream)
 }
 
 func (s *meteredStream) Read(b []byte) (int, error) {
