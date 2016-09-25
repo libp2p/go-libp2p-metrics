@@ -1,7 +1,7 @@
 package meterconn
 
 import (
-	transport "github.com/ipfs/go-libp2p-transport"
+	transport "github.com/libp2p/go-libp2p-transport"
 	metrics "github.com/libp2p/go-libp2p/p2p/metrics"
 )
 
