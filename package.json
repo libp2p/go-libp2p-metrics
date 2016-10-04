@@ -1,0 +1,47 @@
+{
+  "author": "whyrusleeping",
+  "bugs": {
+    "url": "https://github.com/libp2p/go-libp2p-metrics"
+  },
+  "gx": {
+    "dvcsimport": "github.com/libp2p/go-libp2p-metrics"
+  },
+  "gxDependencies": [
+    {
+      "author": "whyrusleeping",
+      "hash": "QmWXjJo15p4pzT7cayEwZi2sWgJqLnGDof6ZGMh9xBgU1p",
+      "name": "go-libp2p-peer",
+      "version": "2.0.4"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmeYJHEk8UjVVZ4XCRTZe6dFQrb8pGWD81LYCgeLp8CvMB",
+      "name": "go-metrics",
+      "version": "0.0.0"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmZNkThpqfVXs9GNbexPrfBbXSLNYeKrE7jwFM2oqHbyqN",
+      "name": "go-libp2p-protocol",
+      "version": "1.0.0"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmUDjsP471mkH5F4DoD5jQaTybX7ENU6YDULwQi9Keu3Vi",
+      "name": "go-libp2p-transport",
+      "version": "2.1.2"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmSctCnUNkE7c7C2LGRGYrdmU9SDH3MtbAeueN7Jq1NN2q",
+      "name": "go-libp2p-net",
+      "version": "1.0.0"
+    }
+  ],
+  "gxVersion": "0.9.1",
+  "language": "go",
+  "license": "",
+  "name": "go-libp2p-metrics",
+  "version": "1.0.0"
+}
+
