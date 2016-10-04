@@ -33,7 +33,7 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmSctCnUNkE7c7C2LGRGYrdmU9SDH3MtbAeueN7Jq1NN2q",
+      "hash": "Qmcr6YS5QCPwejhBxZk5iFEvVEHSVzewbLVMyc64zefaUf",
       "name": "go-libp2p-net",
       "version": "1.0.0"
     }
@@ -42,6 +42,7 @@
   "language": "go",
   "license": "",
   "name": "go-libp2p-metrics",
-  "version": "1.0.0"
+  "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
+  "version": "1.1.0"
 }
 
