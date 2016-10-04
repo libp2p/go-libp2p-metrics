@@ -3,12 +3,13 @@ package meterstream
 import (
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"testing"
+	"time"
 
-	randbo "github.com/dustin/randbo"
 	peer "github.com/ipfs/go-libp2p-peer"
-	inet "github.com/libp2p/go-libp2p/p2p/net"
-	protocol "github.com/libp2p/go-libp2p/p2p/protocol"
+	inet "github.com/libp2p/go-libp2p-net"
+	protocol "github.com/libp2p/go-libp2p-protocol"
 )
 
 type FakeStream struct {
@@ -47,8 +48,10 @@ func TestCallbacksWork(t *testing.T) {
 	toWrite := int64(100000)
 	toRead := int64(100000)
 
-	fake.ReadBuf = io.LimitReader(randbo.New(), toRead)
-	writeData := io.LimitReader(randbo.New(), toWrite)
+	a := rand.New(rand.NewSource(time.Now().UnixNano()))
+	b := rand.New(rand.NewSource(time.Now().UnixNano() + 1))
+	fake.ReadBuf = io.LimitReader(a, toRead)
+	writeData := io.LimitReader(b, toWrite)
 
 	n, err := io.Copy(ms, writeData)
 	if err != nil {
