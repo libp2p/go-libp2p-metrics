@@ -1,9 +1,9 @@
 package meterstream
 
 import (
-	peer "github.com/ipfs/go-libp2p-peer"
 	metrics "github.com/libp2p/go-libp2p-metrics"
 	inet "github.com/libp2p/go-libp2p-net"
+	peer "github.com/libp2p/go-libp2p-peer"
 	protocol "github.com/libp2p/go-libp2p-protocol"
 )
 
