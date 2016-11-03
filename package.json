@@ -33,9 +33,9 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmZ3qHMAtW9WEHexN3HsjSoduUBbrBPXMEoeddQtqdJUJ6",
+      "hash": "QmaYZci7PVJraSMEhpfawUsMkhL1rCZTRtch7zf83yk8Cy",
       "name": "go-libp2p-net",
-      "version": "1.3.0"
+      "version": "1.4.0"
     }
   ],
   "gxVersion": "0.9.1",
