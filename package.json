@@ -43,6 +43,6 @@
   "license": "",
   "name": "go-libp2p-metrics",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "1.6.0"
+  "version": "1.6.1"
 }
 
