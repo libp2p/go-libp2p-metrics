@@ -27,13 +27,13 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmR4YrM1DdvYmox249o8aday8oiotkcsT1Qzv42ujPEQDb",
+      "hash": "QmVpYwkpCJLSLpEY9tUbDQjCVdEVusgibpE9TopF5MPoSS",
       "name": "go-libp2p-transport",
       "version": "2.2.1"
     },
     {
       "author": "whyrusleeping",
-      "hash": "Qmcu7ebuPAPnCqJy29WJrpEFQaFWpW2krmrPtYqbQ2BPti",
+      "hash": "QmRuZnMorqodado1yeTQiv1i9rmtKj29CjPSsBKM7DFXV4",
       "name": "go-libp2p-net",
       "version": "1.6.1"
     }
@@ -43,6 +43,6 @@
   "license": "",
   "name": "go-libp2p-metrics",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "1.6.4"
+  "version": "1.6.5"
 }
 
