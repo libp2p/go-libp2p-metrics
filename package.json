@@ -9,9 +9,9 @@
   "gxDependencies": [
     {
       "author": "whyrusleeping",
-      "hash": "QmdS9KpbDyPrieswibZhkod1oXqRwZJrUPzxCofAMWpFGq",
+      "hash": "QmXYjuNuxVzXKJCfWasQk1RqkhVLDM9jtUKhqc2WPQmFSB",
       "name": "go-libp2p-peer",
-      "version": "2.1.7"
+      "version": "2.2.0"
     },
     {
       "author": "whyrusleeping",
@@ -27,15 +27,15 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmSKoeo64CA54WNWqzVXHi5aT2LbgzP7B9VzQjW5yh7d4H",
+      "hash": "QmQVm7pWYKPStMeMrXNRpvAJE5rSm9ThtQoNmjNHC7sh3k",
       "name": "go-libp2p-transport",
-      "version": "2.2.7"
+      "version": "2.2.8"
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmRscs8KxrSmSv4iuevHv8JfuUzHBMoqiaHzxfDRiksd6e",
+      "hash": "QmahYsGWry85Y7WUe2SX5G4JkH2zifEQAUtJVLZ24aC9DF",
       "name": "go-libp2p-net",
-      "version": "1.6.11"
+      "version": "1.6.12"
     }
   ],
   "gxVersion": "0.9.1",
@@ -43,6 +43,6 @@
   "license": "",
   "name": "go-libp2p-metrics",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "1.6.9"
+  "version": "1.6.10"
 }
 
