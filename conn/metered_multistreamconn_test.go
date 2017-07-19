@@ -5,8 +5,8 @@ import (
 	"net"
 	"time"
 
-	smux "github.com/jbenet/go-stream-muxer"
 	tpt "github.com/libp2p/go-libp2p-transport"
+	smux "github.com/libp2p/go-stream-muxer"
 	ma "github.com/multiformats/go-multiaddr"
 
 	. "github.com/onsi/ginkgo"
@@ -28,7 +28,6 @@ func (c *mockMultiStreamConn) LocalAddr() net.Addr                { panic("not i
 func (c *mockMultiStreamConn) LocalMultiaddr() ma.Multiaddr       { panic("not implemented") }
 func (c *mockMultiStreamConn) RemoteAddr() net.Addr               { panic("not implemented") }
 func (c *mockMultiStreamConn) RemoteMultiaddr() ma.Multiaddr      { panic("not implemented") }
-func (c *mockMultiStreamConn) Serve(smux.StreamHandler)           { panic("not implemented") }
 func (c *mockMultiStreamConn) Transport() tpt.Transport           { panic("not implemented") }
 
 type mockStream struct {

@@ -1,9 +1,9 @@
 package meterconn
 
 import (
-	smux "github.com/jbenet/go-stream-muxer"
 	metrics "github.com/libp2p/go-libp2p-metrics"
 	tpt "github.com/libp2p/go-libp2p-transport"
+	smux "github.com/libp2p/go-stream-muxer"
 )
 
 type meteredStream struct {
