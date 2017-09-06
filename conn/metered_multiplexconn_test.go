@@ -13,22 +13,22 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-type mockMultiStreamConn struct {
+type mockMultiplexConn struct {
 	streamToAccept *mockStream
 	streamToOpen   *mockStream
 }
 
-var _ tpt.MultiStreamConn = &mockMultiStreamConn{}
+var _ tpt.MultiplexConn = &mockMultiplexConn{}
 
-func (c *mockMultiStreamConn) AcceptStream() (smux.Stream, error) { return c.streamToAccept, nil }
-func (c *mockMultiStreamConn) OpenStream() (smux.Stream, error)   { return c.streamToOpen, nil }
-func (c *mockMultiStreamConn) Close() error                       { panic("not implemented") }
-func (c *mockMultiStreamConn) IsClosed() bool                     { panic("not implemented") }
-func (c *mockMultiStreamConn) LocalAddr() net.Addr                { panic("not implemented") }
-func (c *mockMultiStreamConn) LocalMultiaddr() ma.Multiaddr       { panic("not implemented") }
-func (c *mockMultiStreamConn) RemoteAddr() net.Addr               { panic("not implemented") }
-func (c *mockMultiStreamConn) RemoteMultiaddr() ma.Multiaddr      { panic("not implemented") }
-func (c *mockMultiStreamConn) Transport() tpt.Transport           { panic("not implemented") }
+func (c *mockMultiplexConn) AcceptStream() (smux.Stream, error) { return c.streamToAccept, nil }
+func (c *mockMultiplexConn) OpenStream() (smux.Stream, error)   { return c.streamToOpen, nil }
+func (c *mockMultiplexConn) Close() error                       { panic("not implemented") }
+func (c *mockMultiplexConn) IsClosed() bool                     { panic("not implemented") }
+func (c *mockMultiplexConn) LocalAddr() net.Addr                { panic("not implemented") }
+func (c *mockMultiplexConn) LocalMultiaddr() ma.Multiaddr       { panic("not implemented") }
+func (c *mockMultiplexConn) RemoteAddr() net.Addr               { panic("not implemented") }
+func (c *mockMultiplexConn) RemoteMultiaddr() ma.Multiaddr      { panic("not implemented") }
+func (c *mockMultiplexConn) Transport() tpt.Transport           { panic("not implemented") }
 
 type mockStream struct {
 	dataToRead  bytes.Buffer
@@ -40,14 +40,15 @@ var _ smux.Stream = &mockStream{}
 func (s *mockStream) Read(b []byte) (int, error)       { return s.dataToRead.Read(b) }
 func (s *mockStream) Write(b []byte) (int, error)      { return s.dataToWrite.Write(b) }
 func (s *mockStream) Close() error                     { panic("not implemented") }
+func (s *mockStream) Reset() error                     { panic("not implemented") }
 func (s *mockStream) SetDeadline(time.Time) error      { panic("not implemented") }
 func (s *mockStream) SetReadDeadline(time.Time) error  { panic("not implemented") }
 func (s *mockStream) SetWriteDeadline(time.Time) error { panic("not implemented") }
 
-var _ = Describe("MultiStreamConn", func() {
+var _ = Describe("MultiplexConn", func() {
 	var (
-		conn  *mockMultiStreamConn
-		mconn *MeteredMultiStreamConn
+		conn  *mockMultiplexConn
+		mconn *MeteredMultiplexConn
 
 		readCounter  *counter
 		writeCounter *counter
@@ -60,8 +61,8 @@ var _ = Describe("MultiStreamConn", func() {
 		readCounter = &counter{}
 		writeCounter = &counter{}
 
-		conn = &mockMultiStreamConn{}
-		mconn = newMeteredMultiStreamConn(conn, readCounter.Count, writeCounter.Count)
+		conn = &mockMultiplexConn{}
+		mconn = newMeteredMultiplexConn(conn, readCounter.Count, writeCounter.Count)
 
 		stream1 = &mockStream{}
 		stream1.dataToRead.Write([]byte("foobar"))

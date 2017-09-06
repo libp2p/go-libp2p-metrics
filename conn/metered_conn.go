@@ -7,11 +7,11 @@ import (
 
 func WrapConn(bwc metrics.Reporter, conn tpt.Conn) tpt.Conn {
 	switch c := conn.(type) {
-	case tpt.SingleStreamConn:
-		return newMeteredSingleStreamConn(c, bwc.LogRecvMessage, bwc.LogSentMessage)
-	case tpt.MultiStreamConn:
-		return newMeteredMultiStreamConn(c, bwc.LogRecvMessage, bwc.LogSentMessage)
+	case tpt.DuplexConn:
+		return newMeteredDuplexConn(c, bwc.LogRecvMessage, bwc.LogSentMessage)
+	case tpt.MultiplexConn:
+		return newMeteredMultiplexConn(c, bwc.LogRecvMessage, bwc.LogSentMessage)
 	default:
-		panic("c is neither a SingleStreamConn nor a MultiStreamConn")
+		panic("c is neither a DuplexConn nor a MultiplexConn")
 	}
 }

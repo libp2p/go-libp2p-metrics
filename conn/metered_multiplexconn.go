@@ -9,12 +9,12 @@ import (
 type meteredStream struct {
 	smux.Stream
 
-	mc *MeteredMultiStreamConn
+	mc *MeteredMultiplexConn
 }
 
 var _ smux.Stream = &meteredStream{}
 
-func newMeteredStream(mc *MeteredMultiStreamConn, stream smux.Stream) *meteredStream {
+func newMeteredStream(mc *MeteredMultiplexConn, stream smux.Stream) *meteredStream {
 	return &meteredStream{
 		Stream: stream,
 		mc:     mc,
@@ -33,33 +33,33 @@ func (ms *meteredStream) Write(b []byte) (int, error) {
 	return n, err
 }
 
-type MeteredMultiStreamConn struct {
-	tpt.MultiStreamConn
+type MeteredMultiplexConn struct {
+	tpt.MultiplexConn
 
 	mesRecv metrics.MeterCallback
 	mesSent metrics.MeterCallback
 }
 
-var _ tpt.MultiStreamConn = &MeteredMultiStreamConn{}
+var _ tpt.MultiplexConn = &MeteredMultiplexConn{}
 
-func newMeteredMultiStreamConn(base tpt.MultiStreamConn, rcb metrics.MeterCallback, scb metrics.MeterCallback) *MeteredMultiStreamConn {
-	return &MeteredMultiStreamConn{
-		MultiStreamConn: base,
-		mesRecv:         rcb,
-		mesSent:         scb,
+func newMeteredMultiplexConn(base tpt.MultiplexConn, rcb metrics.MeterCallback, scb metrics.MeterCallback) *MeteredMultiplexConn {
+	return &MeteredMultiplexConn{
+		MultiplexConn: base,
+		mesRecv:       rcb,
+		mesSent:       scb,
 	}
 }
 
-func (ms *MeteredMultiStreamConn) OpenStream() (smux.Stream, error) {
-	s, err := ms.MultiStreamConn.OpenStream()
+func (ms *MeteredMultiplexConn) OpenStream() (smux.Stream, error) {
+	s, err := ms.MultiplexConn.OpenStream()
 	if err != nil {
 		return nil, err
 	}
 	return newMeteredStream(ms, s), nil
 }
 
-func (ms *MeteredMultiStreamConn) AcceptStream() (smux.Stream, error) {
-	s, err := ms.MultiStreamConn.AcceptStream()
+func (ms *MeteredMultiplexConn) AcceptStream() (smux.Stream, error) {
+	s, err := ms.MultiplexConn.AcceptStream()
 	if err != nil {
 		return nil, err
 	}
