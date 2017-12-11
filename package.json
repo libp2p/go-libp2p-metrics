@@ -15,12 +15,6 @@
     },
     {
       "author": "whyrusleeping",
-      "hash": "QmeYJHEk8UjVVZ4XCRTZe6dFQrb8pGWD81LYCgeLp8CvMB",
-      "name": "go-metrics",
-      "version": "0.0.0"
-    },
-    {
-      "author": "whyrusleeping",
       "hash": "QmZNkThpqfVXs9GNbexPrfBbXSLNYeKrE7jwFM2oqHbyqN",
       "name": "go-libp2p-protocol",
       "version": "1.0.0"
@@ -36,6 +30,12 @@
       "hash": "QmU4vCDZTPLDqSDKguWbHCiUe46mZUtmM2g2suBZ9NE8ko",
       "name": "go-libp2p-net",
       "version": "2.0.3"
+    },
+    {
+      "author": "Stebalien",
+      "hash": "QmQFXpvKpF34dK9HcE7k8Ksk8V4BwWYZtdEcjzu5aUgRVr",
+      "name": "go-flow-metrics",
+      "version": "0.2.0"
     }
   ],
   "gxVersion": "0.9.1",
