@@ -1,11 +1,9 @@
 package metrics
 
 import (
-	"sync"
-
+	flow "github.com/libp2p/go-flow-metrics"
 	peer "github.com/libp2p/go-libp2p-peer"
 	protocol "github.com/libp2p/go-libp2p-protocol"
-	gm "github.com/whyrusleeping/go-metrics"
 )
 
 type Stats struct {
@@ -16,74 +14,70 @@ type Stats struct {
 }
 
 type BandwidthCounter struct {
-	lock     sync.Mutex
-	totalIn  gm.Meter
-	totalOut gm.Meter
-	reg      gm.Registry
+	totalIn  flow.Meter
+	totalOut flow.Meter
+
+	protocolIn  flow.MeterRegistry
+	protocolOut flow.MeterRegistry
+
+	peerIn  flow.MeterRegistry
+	peerOut flow.MeterRegistry
 }
 
 func NewBandwidthCounter() *BandwidthCounter {
-	reg := gm.NewRegistry()
-	return &BandwidthCounter{
-		totalIn:  gm.GetOrRegisterMeter("totalIn", reg),
-		totalOut: gm.GetOrRegisterMeter("totalOut", reg),
-		reg:      reg,
-	}
+	return new(BandwidthCounter)
 }
 
 func (bwc *BandwidthCounter) LogSentMessage(size int64) {
-	bwc.totalOut.Mark(size)
+	bwc.totalOut.Mark(uint64(size))
 }
 
 func (bwc *BandwidthCounter) LogRecvMessage(size int64) {
-	bwc.totalIn.Mark(size)
+	bwc.totalIn.Mark(uint64(size))
 }
 
 func (bwc *BandwidthCounter) LogSentMessageStream(size int64, proto protocol.ID, p peer.ID) {
-	meter := gm.GetOrRegisterMeter("/peer/out/"+string(p), bwc.reg)
-	meter.Mark(size)
-
-	pmeter := gm.GetOrRegisterMeter("/proto/out/"+string(proto), bwc.reg)
-	pmeter.Mark(size)
+	bwc.protocolOut.Get(string(proto)).Mark(uint64(size))
+	bwc.peerOut.Get(string(p)).Mark(uint64(size))
 }
 
 func (bwc *BandwidthCounter) LogRecvMessageStream(size int64, proto protocol.ID, p peer.ID) {
-	meter := gm.GetOrRegisterMeter("/peer/in/"+string(p), bwc.reg)
-	meter.Mark(size)
-
-	pmeter := gm.GetOrRegisterMeter("/proto/in/"+string(proto), bwc.reg)
-	pmeter.Mark(size)
+	bwc.protocolIn.Get(string(proto)).Mark(uint64(size))
+	bwc.peerIn.Get(string(p)).Mark(uint64(size))
 }
 
 func (bwc *BandwidthCounter) GetBandwidthForPeer(p peer.ID) (out Stats) {
-	inMeter := gm.GetOrRegisterMeter("/peer/in/"+string(p), bwc.reg).Snapshot()
-	outMeter := gm.GetOrRegisterMeter("/peer/out/"+string(p), bwc.reg).Snapshot()
+	inSnap := bwc.peerIn.Get(string(p)).Snapshot()
+	outSnap := bwc.peerOut.Get(string(p)).Snapshot()
 
 	return Stats{
-		TotalIn:  inMeter.Count(),
-		TotalOut: outMeter.Count(),
-		RateIn:   inMeter.RateFine(),
-		RateOut:  outMeter.RateFine(),
+		TotalIn:  int64(inSnap.Total),
+		TotalOut: int64(outSnap.Total),
+		RateIn:   inSnap.Rate,
+		RateOut:  outSnap.Rate,
 	}
 }
 
 func (bwc *BandwidthCounter) GetBandwidthForProtocol(proto protocol.ID) (out Stats) {
-	inMeter := gm.GetOrRegisterMeter(string("/proto/in/"+proto), bwc.reg).Snapshot()
-	outMeter := gm.GetOrRegisterMeter(string("/proto/out/"+proto), bwc.reg).Snapshot()
+	inSnap := bwc.protocolIn.Get(string(proto)).Snapshot()
+	outSnap := bwc.protocolOut.Get(string(proto)).Snapshot()
 
 	return Stats{
-		TotalIn:  inMeter.Count(),
-		TotalOut: outMeter.Count(),
-		RateIn:   inMeter.RateFine(),
-		RateOut:  outMeter.RateFine(),
+		TotalIn:  int64(inSnap.Total),
+		TotalOut: int64(outSnap.Total),
+		RateIn:   inSnap.Rate,
+		RateOut:  outSnap.Rate,
 	}
 }
 
 func (bwc *BandwidthCounter) GetBandwidthTotals() (out Stats) {
+	inSnap := bwc.totalIn.Snapshot()
+	outSnap := bwc.totalOut.Snapshot()
+
 	return Stats{
-		TotalIn:  bwc.totalIn.Count(),
-		TotalOut: bwc.totalOut.Count(),
-		RateIn:   bwc.totalIn.RateFine(),
-		RateOut:  bwc.totalOut.RateFine(),
+		TotalIn:  int64(inSnap.Total),
+		TotalOut: int64(outSnap.Total),
+		RateIn:   inSnap.Rate,
+		RateOut:  outSnap.Rate,
 	}
 }

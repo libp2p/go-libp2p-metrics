@@ -1,6 +1,5 @@
 os:
   - linux
-  - osx
 
 sudo: false
 
@@ -21,3 +20,5 @@ cache:
 
 notifications:
   email: false
+
+env: GOTFLAGS="-race"
