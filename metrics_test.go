@@ -48,6 +48,9 @@ func round(bwc *BandwidthCounter, b *testing.B) {
 	b.StopTimer()
 }
 
+// Allow 5% errors for bw calculations.
+const acceptableError = 0.05
+
 func TestBandwidthCounter(t *testing.T) {
 	bwc := NewBandwidthCounter()
 	start := make(chan struct{})
@@ -56,7 +59,7 @@ func TestBandwidthCounter(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		p := peer.ID(fmt.Sprintf("peer-%d", i))
 		for j := 0; j < 2; j++ {
-			proto := protocol.ID(fmt.Sprintf("bitswap-%d", j))
+			proto := protocol.ID(fmt.Sprintf("proto-%d", j))
 			go func() {
 				defer wg.Done()
 				<-start
@@ -76,31 +79,56 @@ func TestBandwidthCounter(t *testing.T) {
 	}
 
 	close(start)
-	time.Sleep(2*time.Second + 500*time.Millisecond)
+	time.Sleep(2*time.Second + 100*time.Millisecond)
+
 	for i := 0; i < 100; i++ {
 		stats := bwc.GetBandwidthForPeer(peer.ID(fmt.Sprintf("peer-%d", i)))
-		if !approxEq(stats.RateOut, 2000, 200) {
-			t.Errorf("expected rate 1000 (±200), got %f", stats.RateOut)
-		}
-
-		if !approxEq(stats.RateIn, 1000, 100) {
-			t.Errorf("expected rate 500 (±100), got %f", stats.RateIn)
-		}
+		assertApproxEq(t, 2000, stats.RateOut)
+		assertApproxEq(t, 1000, stats.RateIn)
 	}
+
+	for i := 0; i < 2; i++ {
+		stats := bwc.GetBandwidthForProtocol(protocol.ID(fmt.Sprintf("proto-%d", i)))
+		assertApproxEq(t, 100000, stats.RateOut)
+		assertApproxEq(t, 50000, stats.RateIn)
+	}
+
+	{
+		stats := bwc.GetBandwidthTotals()
+		assertApproxEq(t, 200000, stats.RateOut)
+		assertApproxEq(t, 100000, stats.RateIn)
+	}
+
 	wg.Wait()
 	time.Sleep(1 * time.Second)
 	for i := 0; i < 100; i++ {
 		stats := bwc.GetBandwidthForPeer(peer.ID(fmt.Sprintf("peer-%d", i)))
-		if stats.TotalOut != 8000 {
-			t.Errorf("expected total 8000, got %d", stats.TotalOut)
-		}
+		assertEq(t, 8000, stats.TotalOut)
+		assertEq(t, 4000, stats.TotalIn)
+	}
 
-		if stats.TotalIn != 4000 {
-			t.Errorf("expected total 4000, got %d", stats.TotalIn)
-		}
+	for i := 0; i < 2; i++ {
+		stats := bwc.GetBandwidthForProtocol(protocol.ID(fmt.Sprintf("proto-%d", i)))
+		assertEq(t, 400000, stats.TotalOut)
+		assertEq(t, 200000, stats.TotalIn)
+	}
+
+	{
+		stats := bwc.GetBandwidthTotals()
+		assertEq(t, 800000, stats.TotalOut)
+		assertEq(t, 400000, stats.TotalIn)
 	}
 }
 
-func approxEq(a, b, err float64) bool {
-	return math.Abs(a-b) < err
+func assertEq(t *testing.T, expected, actual int64) {
+	if expected != actual {
+		t.Errorf("expected  %d, got %d", expected, actual)
+	}
+}
+
+func assertApproxEq(t *testing.T, expected, actual float64) {
+	margin := expected * acceptableError
+	if !(math.Abs(expected-actual) <= margin) {
+		t.Errorf("expected %f (±%f), got %f", expected, margin, actual)
+	}
 }
