@@ -48,8 +48,8 @@ func round(bwc *BandwidthCounter, b *testing.B) {
 	b.StopTimer()
 }
 
-// Allow 5% errors for bw calculations.
-const acceptableError = 0.05
+// Allow 7% errors for bw calculations.
+const acceptableError = 0.07
 
 func TestBandwidthCounter(t *testing.T) {
 	bwc := NewBandwidthCounter()
