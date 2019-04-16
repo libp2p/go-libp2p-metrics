@@ -1,6 +1,6 @@
 package metrics
 
-import moved "github.com/libp2p/go-libp2p/metrics"
+import moved "github.com/libp2p/go-libp2p-core/metrics"
 
 // Deprecated: use github.com/libp2p/go-libp2p/metrics.Reporter instead.
 type Reporter = moved.Reporter
