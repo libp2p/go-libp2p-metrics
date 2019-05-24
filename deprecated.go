@@ -1,3 +1,4 @@
+// Deprecated: use github.com/libp2p/go-libp2p-core/metrics instead.
 package metrics
 
 import core "github.com/libp2p/go-libp2p-core/metrics"
